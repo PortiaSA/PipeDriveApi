@@ -22,13 +22,5 @@ namespace PipeDriveApi.EntityServices
 
 			return await GetAsync(request, start, limit);
 		}
-
-		public async Task<TOrganization> AddAsync(string name, int? ownerId = null, Visibility visibleTo = Visibility.Shared, DateTime? addTime = null)
-		{
-            var request = new RestRequest(_Resource, Method.POST);
-
-			var parameters = new { Name = name, VisibleTo = visibleTo, OwnerId = ownerId, AddTime = addTime };
-            return await _client.ExecuteRequestAsync<TOrganization>(request, parameters);
-		}
     }
 }

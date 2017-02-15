@@ -84,6 +84,11 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\WebhookPost.cs" />
+    <Compile Include="Requests\AddOrganizationRequestBody.cs" />
+    <Compile Include="Requests\AddPersonRequestBody.cs" />
+    <Compile Include="Requests\AddNoteRequestBody.cs" />
+    <Compile Include="Requests\AddDealRequestBody.cs" />
+    <Compile Include="Requests\IAddRequestBody.cs" />
     <Compile Include="RestRequestExtensions.cs" />
     <Compile Include="Response\PaginatedPipeDriveResponse.cs" />
     <Compile Include="Response\PipeDriveResponse.cs" />

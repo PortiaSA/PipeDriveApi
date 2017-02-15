@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using PipeDriveApi.EntityServices;
+using PipeDriveApi.Requests;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,12 +8,10 @@ namespace PipeDriveApi.Tests
 	[TestFixture]
 	public class OrganizationTest : BaseFixture
 	{
-		private readonly string orgName = "TestOrganization";
-
 		[OneTimeTearDown]
 		public async Task CleanupOrganizations()
 		{
-			var organizations = await client.Organizations.FindAsync(orgName);
+			var organizations = await client.Organizations.FindAsync(organizationName);
 			foreach (var org in organizations)
 			{
 				await client.Organizations.DeleteAsync(org.Id);
@@ -23,10 +21,10 @@ namespace PipeDriveApi.Tests
 		[Test]
 		public async Task CreateAndDeleteOrganization()
 		{
-			var organization = await client.Organizations.AddAsync(orgName);
+			var organization = await client.Organizations.AddAsync(new AddOrganizationRequestBody(organizationName));
 
 			Assert.AreNotEqual(default(int), organization.Id);
-			Assert.AreEqual(orgName, organization.Name);
+			Assert.AreEqual(organizationName, organization.Name);
 
 			var deletedOrganization = await client.Organizations.DeleteAsync(organization.Id);
 			Assert.AreEqual(organization.Id, deletedOrganization.Id);
@@ -35,7 +33,7 @@ namespace PipeDriveApi.Tests
 		[Test]
 		public async Task FindOrganization()
 		{
-			var organization = await client.Organizations.AddAsync(orgName);
+			var organization = await client.Organizations.AddAsync(new AddOrganizationRequestBody(organizationName));
 
 			var fetched = await client.Organizations.FindAsync("Test");
 

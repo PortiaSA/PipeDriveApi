@@ -31,30 +31,5 @@ namespace PipeDriveApi.EntityServices
 
 			return await GetAsync<FoundPerson>(request, start, limit);
 		}
-
-		public async Task<TPerson> AddAsync(
-			string name,
-			int? ownerId = null,
-			int? orgId = null,
-			IEnumerable<string> email = null,
-			IEnumerable<string> phone = null,
-			Visibility visibleTo = Visibility.Shared,
-			DateTime? addTime = null
-			)
-		{
-			var request = new RestRequest(_Resource, Method.POST);
-
-			var body = new
-			{
-				Name = name,
-				OwnerId = ownerId,
-				OrgId = orgId,
-				Email = email,
-				Phone = phone,
-				VisibleTo = visibleTo, 
-				AddTime = addTime
-			};
-			return await _client.ExecuteRequestAsync<TPerson>(request, body);
-		}
 	}
 }

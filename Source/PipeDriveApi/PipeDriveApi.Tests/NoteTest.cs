@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
+using PipeDriveApi.Requests;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PipeDriveApi.Tests
@@ -8,34 +8,36 @@ namespace PipeDriveApi.Tests
 	[TestFixture]
 	public class NoteTest : BaseFixture
 	{
-		private readonly string organizationName = "TestOrganization";
-		private readonly string personName = "TestPerson";
-		private readonly string personEmail = "test@person.com";
-		private readonly string dealTitle = "TestDeal";
-		private readonly int stageId = 23;
-		private readonly string noteContent = "TestNote";
-
 		[Test]
 		public async Task CreateAndDeleteNote()
 		{
-			var organization = await client.Organizations.AddAsync(organizationName);
+			var organization = await client.Organizations.AddAsync(new AddOrganizationRequestBody(organizationName));
 			var person = await client.Persons.AddAsync(
-				personName,
-				email: new List<string> { personEmail },
-				orgId: organization.Id
+				new AddPersonRequestBody(
+					personName,
+					email: new List<string> { personEmail },
+					orgId: organization.Id
+				)
 			);
+
 			var deal = await client.Deals.AddAsync(
-				dealTitle,
-				person.Id,
-				organization.Id,
-				stageId: stageId);
+				new AddDealRequestBody(
+					dealTitle,
+					person.Id,
+					organization.Id,
+					stageId: stageId
+				)
+			);
 
 			var note = await client.Notes.AddAsync(
-				noteContent,
-				deal.Id,
-				person.Id,
-				organization.Id,
-				isPinnedToDeal: true);
+				new AddNoteRequestBody(
+					noteContent,
+					deal.Id,
+					person.Id,
+					organization.Id,
+					isPinnedToDeal: true
+				)
+			);
 
 			Assert.AreNotEqual(default(int), note.Id);
 

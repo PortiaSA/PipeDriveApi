@@ -23,37 +23,5 @@ namespace PipeDriveApi.EntityServices
             var response = await _client.ExecuteRequestAsync<List<DealProduct>>(request);
             return response.AsReadOnly();
         }
-
-		public async Task<TDeal> AddAsync(
-			string title,
-			int personId,
-			int orgId,
-			string value = null,
-			string currency = null,
-			int? userId = null,
-			int? stageId = null,
-			DealStatus? status = null,
-			string lostReason = null,
-			DateTime? addTime = null,
-			Visibility visibleTo = Visibility.Shared)
-		{
-			var request = new RestRequest($"{_Resource}", Method.POST);
-
-			var body = new
-			{
-				Title = title,
-				PersonId = personId,
-				OrgId = orgId,
-				Value = value,
-				Currency = currency,
-				UserId = userId,
-				StageId = stageId,
-				Status = status?.ToString(),
-				LostReason = lostReason,
-				AddTime = addTime,
-				VisibleTo = visibleTo
-			};
-			return await _client.ExecuteRequestAsync<TDeal>(request, body);
-		}
     }
 }

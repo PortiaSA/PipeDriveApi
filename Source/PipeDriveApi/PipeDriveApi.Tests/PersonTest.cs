@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using PipeDriveApi.EntityServices;
+using PipeDriveApi.Requests;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +10,6 @@ namespace PipeDriveApi.Tests
 	[TestFixture]
 	public class PersonTest : BaseFixture
 	{
-		private readonly string personName = "TestPerson";
-		private readonly string personEmail = "test@person.com";
-
 		[OneTimeTearDown]
 		public async Task CleanupPersons()
 		{
@@ -26,8 +24,10 @@ namespace PipeDriveApi.Tests
 		public async Task CreateAndDeletePerson()
 		{
 			var person = await client.Persons.AddAsync(
-				personName, 
-				email: new List<string> { personEmail }
+				new AddPersonRequestBody(
+					personName,
+					email: new List<string> { personEmail }
+				)
 			);
 
 			Assert.AreNotEqual(default(int), person.Id);
@@ -43,8 +43,10 @@ namespace PipeDriveApi.Tests
 		public async Task FindPerson()
 		{
 			var person = await client.Persons.AddAsync(
-				personName,
-				email: new List<string> { personEmail }
+				new AddPersonRequestBody(
+					personName,
+					email: new List<string> { personEmail }
+				)
 			);
 
 			var fetched = await client.Persons.FindAsync(personEmail);

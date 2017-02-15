@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PipeDriveApi;
+using PipeDriveApi.Requests;
 
 namespace PipeDriveApi.EntityServices
 {
@@ -16,6 +17,16 @@ namespace PipeDriveApi.EntityServices
         {
             _Resource = resource;
         }
+
+		#region Create
+		public async Task<TEntity> AddAsync(IAddRequestBody body)
+		{
+			var request = new RestRequest(_Resource, Method.POST);
+
+			return await _client.ExecuteRequestAsync<TEntity>(request, body);
+		}
+		#endregion Create
+
 
 		#region Read
 		public async Task<ListResult<TEntity>> GetAsync(int start = 0, int limit = 100, Sort sort = null)

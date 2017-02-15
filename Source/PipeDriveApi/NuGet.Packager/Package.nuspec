@@ -2,11 +2,10 @@
 <package >
   <metadata>
     <id>PipeDriveApi</id>
-    <version>1.0.5</version>
+    <version>2.0.0</version>
     <title>PipeDrive Api</title>
     <authors>Casper Jensen</authors>
-    <owners>Worklife Barometer Aps</owners>
-    <description>
+    <owners>Worklife Barometer Aps</owners>    <description>
       .Net api for interacting with the PipeDrive API. Fully Async and support for custom fields and API Rate limiting.
     </description>
     <releaseNotes>
