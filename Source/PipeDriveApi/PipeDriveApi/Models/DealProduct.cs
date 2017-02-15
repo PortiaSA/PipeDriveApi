@@ -8,7 +8,6 @@ namespace PipeDriveApi
 {
     public class DealProduct : BaseEntity
     {
-        public int Id { get; set; }
         public int DealId { get; set; }
         public int OrderNr { get; set; }
         public int ProductId { get; set; }

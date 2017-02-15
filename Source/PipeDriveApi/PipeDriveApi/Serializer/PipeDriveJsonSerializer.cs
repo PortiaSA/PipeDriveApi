@@ -69,7 +69,6 @@ namespace PipeDriveApi.Serializer
                 DateParseHandling = DateParseHandling.DateTime,
                 DateTimeZoneHandling = DateTimeZoneHandling.Local,
                 DateFormatString = "yyyy-MM-dd HH:mm:ss"
-                
             });
         }).Value;
     }

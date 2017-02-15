@@ -12,7 +12,7 @@ namespace PipeDriveApi
         private IReadOnlyList<T> _List;
         internal ListResult(IReadOnlyList<T> list, PaginationInfo paginationInfo)
         {
-            _List = list;
+            _List = list ?? new List<T>().AsReadOnly();
             Pagination = paginationInfo;
         }
         public PaginationInfo Pagination { get; private set; }

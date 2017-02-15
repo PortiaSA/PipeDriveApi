@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PipeDriveApi
+namespace PipeDriveApi.Enums
 {
-    public class BaseEntity
-    {
-		public int Id { get; set; }
-    }
+	public enum Visibility
+	{
+		Private = 1,
+		Shared = 3
+	}
 }

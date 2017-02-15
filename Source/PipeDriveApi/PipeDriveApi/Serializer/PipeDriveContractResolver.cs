@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
 namespace PipeDriveApi.Serializer
@@ -16,7 +17,17 @@ namespace PipeDriveApi.Serializer
             NamingStrategy = new SnakeCaseNamingStrategy();
         }
 
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+		protected override JsonContract CreateContract(Type objectType)
+		{
+			var contract = base.CreateContract(objectType);
+			if (objectType == typeof(DateTime) || objectType == typeof(DateTime?))
+			{
+				contract.Converter = new ZerosIsoDateTimeConverter();
+			}
+			return contract;
+		}
+
+		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var prop = base.CreateProperty(member, memberSerialization);
             var cfa = member.GetCustomAttribute<CustomFieldAttribute>(true);
@@ -64,4 +75,18 @@ namespace PipeDriveApi.Serializer
             return target;
         }
     }
+
+	// Converts "0000-00-00 00:00:00" to DateTime.MinValue
+	public class ZerosIsoDateTimeConverter : IsoDateTimeConverter
+	{
+		private const string zeroDateTime = "0000-00-00 00:00:00";
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		{
+			if (reader.TokenType == JsonToken.String && reader.Value.ToString() == zeroDateTime)
+			{
+				return DateTime.MinValue;
+			}
+			return base.ReadJson(reader, objectType, existingValue, serializer);
+		}
+	}
 }
